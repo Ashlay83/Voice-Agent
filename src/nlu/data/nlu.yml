@@ -1,0 +1,10 @@
+version: "3.1"
+nlu: 
+- intent: send_messages
+  examples: |
+    - i want to send an [whatsapp](platform) message to [alice](contact) that [i will be not able to come today](message_body)
+    - send a [telegram](platform) msg to [john](contact) saying [meeting is cancelled](message_body)
+    - text [sarah](contact) on [signal](platform) that [i am running late](message_body)
+    - send [whatsapp](platform) to [dad](contact) [call me back asap](message_body)
+    - message [bob](contact) on [discord](platform) that [the server is down](message_body)
+    - can you send a [email](platform) to [hr](contact) saying [i am sick today](message_body)
