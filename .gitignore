@@ -4,3 +4,4 @@ __pycache__/
 .env
 screenshots/
 whisper-models/
+git_helps
