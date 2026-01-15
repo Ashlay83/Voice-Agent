@@ -1,34 +1,43 @@
 version: "3.1"
 
+# 1. INPUTS
 intents:
-  - greet
-  - goodbye
-  - affirm
-  - deny
-  - mood_great
-  - mood_unhappy
-  - bot_challenge
+  - send_message
+  - inform_platform  # (Optional: If user replies "WhatsApp" later)
 
+# 2. KEYWORDS
+entities:
+  - platform
+  - contact
+  - message_body
+
+# 3. MEMORY
+slots:
+  platform:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: platform
+      
+  contact:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: contact
+
+  message_body:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: message_body
+
+# 4. OUTPUTS
 responses:
-  utter_greet:
-  - text: "Hey! How are you?"
+  utter_ask_platform:
+  - text: "I can send that, but I need to know which app to use (WhatsApp, Telegram, etc.)?"
 
-  utter_cheer_up:
-  - text: "Here is something to cheer you up:"
-    image: "https://i.imgur.com/nGF1K8f.jpg"
-
-  utter_did_that_help:
-  - text: "Did that help you?"
-
-  utter_happy:
-  - text: "Great, carry on!"
-
-  utter_goodbye:
-  - text: "Bye"
-
-  utter_iamabot:
-  - text: "I am a bot, powered by Rasa."
-
-session_config:
-  session_expiration_time: 60
-  carry_over_slots_to_new_session: true
+  utter_message_sent:
+  - text: "On it! Sending a {platform} message to {contact}."
+  
+  utter_default:
+  - text: "I didn't quite catch that. Could you repeat?"
