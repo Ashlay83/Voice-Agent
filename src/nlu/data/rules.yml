@@ -1,7 +1,24 @@
 version: "3.1"
+
 rules:
-  -rule: Ask for platform is missing 
-    steps: 
-      -intent: send_message
-      -
-    
+  - rule: Ask for platform if missing
+    steps:
+      - intent: send_message
+      - slot_was_set:
+          - platform: null
+      - action: utter_ask_platform
+
+  - rule: Execute message sending if platform is present
+    steps:
+      - intent: send_message
+      - slot_was_set:
+          - platform: true
+      - action: utter_message_sent
+
+  - rule: Handle platform answer
+    steps:
+      - action: utter_ask_platform
+      - intent: inform_platform
+      - slot_was_set:
+          - platform: true
+      - action: utter_message_sent

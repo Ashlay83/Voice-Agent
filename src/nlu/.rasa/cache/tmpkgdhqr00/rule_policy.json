@@ -1,0 +1,30 @@
+{
+  "lookup": {
+    "rules": {
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"slots\": {\"platform\": [1.0]}, \"user\": {\"intent\": \"send_message\"}}]": "utter_message_sent",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"slots\": {\"platform\": [1.0]}, \"user\": {\"intent\": \"send_message\"}}, {\"prev_action\": {\"action_name\": \"utter_message_sent\"}, \"slots\": {\"platform\": [1.0]}, \"user\": {\"intent\": \"send_message\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"slots\": {\"platform\": \"should_not_be_set\"}, \"user\": {\"intent\": \"send_message\"}}]": "utter_ask_platform",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"slots\": {\"platform\": \"should_not_be_set\"}, \"user\": {\"intent\": \"send_message\"}}, {\"prev_action\": {\"action_name\": \"utter_ask_platform\"}, \"slots\": {\"platform\": \"should_not_be_set\"}, \"user\": {\"intent\": \"send_message\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"utter_ask_platform\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"utter_ask_platform\"}}, {\"prev_action\": {\"action_name\": \"action_listen\"}, \"slots\": {\"platform\": [1.0]}, \"user\": {\"intent\": \"inform_platform\"}}]": "utter_message_sent",
+      "[{\"prev_action\": {\"action_name\": \"utter_ask_platform\"}}, {\"prev_action\": {\"action_name\": \"action_listen\"}, \"slots\": {\"platform\": [1.0]}, \"user\": {\"intent\": \"inform_platform\"}}, {\"prev_action\": {\"action_name\": \"utter_message_sent\"}, \"slots\": {\"platform\": [1.0]}, \"user\": {\"intent\": \"inform_platform\"}}]": "action_listen"
+    },
+    "rule_only_slots": [
+      "platform"
+    ],
+    "rule_only_loops": [],
+    "rules_for_loop_unhappy_path": {},
+    "rules_not_in_stories": [
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"slots\": {\"platform\": [1.0]}, \"user\": {\"intent\": \"send_message\"}}, {\"prev_action\": {\"action_name\": \"utter_message_sent\"}, \"slots\": {\"platform\": [1.0]}, \"user\": {\"intent\": \"send_message\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"slots\": {\"platform\": \"should_not_be_set\"}, \"user\": {\"intent\": \"send_message\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"utter_ask_platform\"}}, {\"prev_action\": {\"action_name\": \"action_listen\"}, \"slots\": {\"platform\": [1.0]}, \"user\": {\"intent\": \"inform_platform\"}}]",
+      "predicting default action with intent back",
+      "predicting default action with intent session_start",
+      "predicting default action with intent restart",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"slots\": {\"platform\": \"should_not_be_set\"}, \"user\": {\"intent\": \"send_message\"}}, {\"prev_action\": {\"action_name\": \"utter_ask_platform\"}, \"slots\": {\"platform\": \"should_not_be_set\"}, \"user\": {\"intent\": \"send_message\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"utter_ask_platform\"}}, {\"prev_action\": {\"action_name\": \"action_listen\"}, \"slots\": {\"platform\": [1.0]}, \"user\": {\"intent\": \"inform_platform\"}}, {\"prev_action\": {\"action_name\": \"utter_message_sent\"}, \"slots\": {\"platform\": [1.0]}, \"user\": {\"intent\": \"inform_platform\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"utter_ask_platform\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"slots\": {\"platform\": [1.0]}, \"user\": {\"intent\": \"send_message\"}}]"
+    ]
+  }
+}

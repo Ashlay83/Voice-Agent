@@ -1,24 +1,21 @@
 version: "3.1"
 
-# 1. INPUTS
 intents:
   - send_message
-  - inform_platform  # (Optional: If user replies "WhatsApp" later)
+  - inform_platform
 
-# 2. KEYWORDS
 entities:
   - platform
   - contact
   - message_body
 
-# 3. MEMORY
 slots:
   platform:
     type: text
     mappings:
     - type: from_entity
       entity: platform
-      
+  
   contact:
     type: text
     mappings:
@@ -31,13 +28,16 @@ slots:
     - type: from_entity
       entity: message_body
 
-# 4. OUTPUTS
 responses:
   utter_ask_platform:
   - text: "I can send that, but I need to know which app to use (WhatsApp, Telegram, etc.)?"
 
   utter_message_sent:
-  - text: "On it! Sending a {platform} message to {contact}."
-  
+  - text: "On it! Sending a {platform} message to {contact} saying '{message_body}'."
+
   utter_default:
   - text: "I didn't quite catch that. Could you repeat?"
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

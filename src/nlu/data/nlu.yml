@@ -1,6 +1,7 @@
 version: "3.1"
-nlu: 
-- intent: send_messages
+
+nlu:
+- intent: send_message
   examples: |
     - i want to send an [whatsapp](platform) message to [alice](contact) that [i will be not able to come today](message_body)
     - send a [telegram](platform) msg to [john](contact) saying [meeting is cancelled](message_body)
@@ -8,3 +9,19 @@ nlu:
     - send [whatsapp](platform) to [dad](contact) [call me back asap](message_body)
     - message [bob](contact) on [discord](platform) that [the server is down](message_body)
     - can you send a [email](platform) to [hr](contact) saying [i am sick today](message_body)
+    - send a text to [alice](contact)
+    - message [mom](contact) saying [hello](message_body)
+
+- intent: inform_platform
+  examples: |
+    - [whatsapp](platform)
+    - use [telegram](platform)
+    - [signal](platform) please
+    - on [discord](platform)
+    - [email](platform)
+
+- synonym: whatsapp
+  examples: |
+    - whatty
+    - wapp
+    - Wmsg
