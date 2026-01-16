@@ -3,6 +3,7 @@ version: "3.1"
 intents:
   - send_message
   - inform_platform
+  - inform_contact
 
 entities:
   - platform
@@ -31,6 +32,10 @@ slots:
 responses:
   utter_ask_platform:
   - text: "I can send that, but I need to know which app to use (WhatsApp, Telegram, etc.)?"
+
+  
+  utter_ask_contact:
+  - text: "Ok sure, may i please know whom to send it to"
 
   utter_message_sent:
   - text: "On it! Sending a {platform} message to {contact} saying '{message_body}'."

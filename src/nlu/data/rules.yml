@@ -1,24 +1,46 @@
 version: "3.1"
 
 rules:
-  - rule: Ask for platform if missing
-    steps:
-      - intent: send_message
-      - slot_was_set:
-          - platform: null
-      - action: utter_ask_platform
+# --- PRIORITY 1: PLATFORM ---
+- rule: Ask for platform first (Highest Priority)
+  steps:
+  - intent: send_message
+  - slot_was_set:
+      - platform: null        # If this is empty, STOP and ask.
+  - action: utter_ask_platform
 
-  - rule: Execute message sending if platform is present
-    steps:
-      - intent: send_message
-      - slot_was_set:
-          - platform: true
-      - action: utter_message_sent
+- rule: Handle platform answer
+  steps:
+  - action: utter_ask_platform
+  - intent: inform_platform
+  - slot_was_set:
+      - platform: true
+  - action: utter_ask_contact # <--- NEW! After getting platform, check for contact.
 
-  - rule: Handle platform answer
-    steps:
-      - action: utter_ask_platform
-      - intent: inform_platform
-      - slot_was_set:
-          - platform: true
-      - action: utter_message_sent
+# --- PRIORITY 2: CONTACT ---
+- rule: Ask for contact if platform is ready
+  steps:
+  - intent: send_message
+  - slot_was_set:
+      - platform: true        # Condition 1: Platform must be safe.
+  - slot_was_set:
+      - contact: null         # Condition 2: But Contact is missing.
+  - action: utter_ask_contact
+
+- rule: Handle contact answer
+  steps:
+  - action: utter_ask_contact
+  - intent: inform_contact
+  - slot_was_set:
+      - contact: true
+  - action: utter_message_sent
+
+# --- PRIORITY 3: EXECUTE ---
+- rule: Execute message sending (Only when ALL are ready)
+  steps:
+  - intent: send_message
+  - slot_was_set:
+      - platform: true
+  - slot_was_set:
+      - contact: true
+  - action: utter_message_sent

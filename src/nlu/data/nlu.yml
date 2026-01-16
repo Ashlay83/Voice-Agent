@@ -20,6 +20,13 @@ nlu:
     - on [discord](platform)
     - [email](platform)
 
+- intent: inform_contact
+  examples: |
+    - [Alice](contact)
+    - to [bob](contact)
+    - [john](contact) please
+    - message [alice](contact)
+
 - synonym: whatsapp
   examples: |
     - whatty

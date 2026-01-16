@@ -1,0 +1,7 @@
+{
+  "rule_only_slots": [
+    "contact",
+    "platform"
+  ],
+  "rule_only_loops": []
+}
