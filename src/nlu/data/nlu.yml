@@ -11,6 +11,8 @@ nlu:
     - can you send a [email](platform) to [hr](contact) saying [i am sick today](message_body)
     - send a text to [alice](contact)
     - message [mom](contact) saying [hello](message_body)
+    - Send a [WhatsApp](platform) [hi] (message_body)message to [Deepak](contact)
+    - Send a [hi](message_body) message to [Deepak](contact) on WhatsApp
 
 - intent: inform_platform
   examples: |
@@ -32,3 +34,15 @@ nlu:
     - whatty
     - wapp
     - Wmsg
+
+- lookup: contact
+  examples: |
+    - Naveen
+    - Deepak
+    - Alice
+    - John
+    - Sarah
+    - Bob
+    - Mom
+    - Dad
+    - HR

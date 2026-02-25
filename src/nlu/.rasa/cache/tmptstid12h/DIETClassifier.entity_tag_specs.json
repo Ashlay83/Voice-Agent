@@ -1,0 +1,36 @@
+[
+  {
+    "tag_name": "entity",
+    "ids_to_tags": {
+      "1": "B-contact",
+      "2": "I-contact",
+      "3": "L-contact",
+      "4": "U-contact",
+      "5": "B-message_body",
+      "6": "I-message_body",
+      "7": "L-message_body",
+      "8": "U-message_body",
+      "9": "B-platform",
+      "10": "I-platform",
+      "11": "L-platform",
+      "12": "U-platform",
+      "0": "O"
+    },
+    "tags_to_ids": {
+      "B-contact": 1,
+      "I-contact": 2,
+      "L-contact": 3,
+      "U-contact": 4,
+      "B-message_body": 5,
+      "I-message_body": 6,
+      "L-message_body": 7,
+      "U-message_body": 8,
+      "B-platform": 9,
+      "I-platform": 10,
+      "L-platform": 11,
+      "U-platform": 12,
+      "O": 0
+    },
+    "num_tags": 13
+  }
+]
