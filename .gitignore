@@ -5,3 +5,11 @@ __pycache__/
 screenshots/
 whisper-models/
 git_helps
+# Python Virtual Environment
+
+# Audio files
+*.wav
+
+# System files
+.DS_Store
+.rasa/
