@@ -1,0 +1,46 @@
+Recording your own dataset is definitely the most tedious part of fine-tuning, but it is exactly what makes the model bulletproof for your specific use case.
+
+Since your Rasa brain is already looking for specific contacts like Deepak, Naveen, Rahul, and Anjali, I have included them in these examples. This way, when you train Whisper to output these exact English sentences, your `nlu.yml` will perfectly extract the names and the message bodies.
+
+Here are 15 moderately long, conversational Malayalam sentences with their exact English target translations for your `metadata.csv`.
+
+### WhatsApp Command Training Set
+
+1. **Audio:** ദീപക്കിന് ഒരു മെസ്സേജ് അയക്കുക, ഞാൻ ട്രാഫിക്കിൽ പെട്ടു, കുറച്ചു വൈകും.
+**Target English:** Send a message to Deepak that I am stuck in traffic and will be a little late.
+2. **Audio:** നവീനോട് ചോദിക്കുക, ആ പ്രൊജക്റ്റ് റിപ്പോർട്ട് ഇതുവരെ പൂർത്തിയായോ എന്ന്.
+**Target English:** Ask Naveen if that project report is completed yet.
+3. **Audio:** രാഹുലിന് വാട്സാപ്പിൽ മെസ്സേജ് അയക്കുക, നാളത്തെ മീറ്റിംഗ് മാറ്റിവെക്കാൻ പറ്റുമോ എന്ന്.
+**Target English:** Message Rahul on WhatsApp asking if we can postpone tomorrow's meeting.
+4. **Audio:** അഞ്ജലിയോട് പറയുക, ഞാൻ വീട്ടിൽ എത്തിയിട്ട് തിരിച്ചു വിളിക്കാം എന്ന്.
+**Target English:** Tell Anjali that I will call back after reaching home.
+5. **Audio:** ദീപക്കിന് മെസ്സേജ് അയക്കുക, വൈകുന്നേരം നമുക്ക് പുറത്ത് പോയി കാപ്പി കുടിക്കാം എന്ന്.
+**Target English:** Send a message to Deepak that we can go out for coffee in the evening.
+6. **Audio:** നവീന് ഒരു വാട്സാപ്പ് മെസ്സേജ് അയക്കുക, എനിക്ക് ആ ഫയൽ എത്രയും പെട്ടെന്ന് അയച്ചു തരാൻ.
+**Target English:** Send a WhatsApp message to Naveen to send me that file as soon as possible.
+7. **Audio:** രാഹുലിന് മെസ്സേജ് അയക്കുക, എന്റെ ലാപ്ടോപ്പിൽ ചെറിയൊരു പ്രശ്നമുണ്ട്, ഞാൻ കുറച്ചു കഴിഞ്ഞ് ജോയിൻ ചെയ്യാം.
+**Target English:** Message Rahul that my laptop has a slight issue and I will join a bit later.
+8. **Audio:** അഞ്ജലിയോട് ചോദിക്കുക, വീക്കെൻഡിൽ സിനിമയ്ക്ക് പോയാലോ എന്ന്.
+**Target English:** Ask Anjali if we should go for a movie on the weekend.
+9. **Audio:** ദീപക്കിന് മെസ്സേജ് ചെയ്യുക, ഇന്നത്തെ പരിപാടികൾ എല്ലാം ക്യാൻസൽ ചെയ്തു എന്ന്.
+**Target English:** Message Deepak that all of today's plans are canceled.
+10. **Audio:** നവീനോട് ആ ലൊക്കേഷൻ വാട്സാപ്പിൽ ഷെയർ ചെയ്യാൻ പറയുക.
+**Target English:** Tell Naveen to share that location on WhatsApp.
+11. **Audio:** രാഹുലിന് മെസ്സേജ് അയക്കുക, പൈസ ഞാൻ അക്കൗണ്ടിലേക്ക് ട്രാൻസ്ഫർ ചെയ്തിട്ടുണ്ട് എന്ന്.
+**Target English:** Send a message to Rahul that I have transferred the money to the account.
+12. **Audio:** അഞ്ജലിക്ക് ഒരു വാട്സാപ്പ് മെസ്സേജ് അയക്കുക, ഞാൻ നാളെ രാവിലെ തന്നെ അവിടെ എത്തും എന്ന്.
+**Target English:** Send a WhatsApp message to Anjali that I will reach there tomorrow morning itself.
+13. **Audio:** ദീപക്കിനോട് ചോദിക്കുക, ഇന്ന് വൈകുന്നേരം ഫ്രീ ആണോ, ഒന്ന് സംസാരിക്കാൻ സമയം കിട്ടുമോ എന്ന്.
+**Target English:** Ask Deepak if he is free this evening and has time to talk.
+14. **Audio:** നവീന് മെസ്സേജ് അയക്കുക, വരുമ്പോൾ ആ ബുക്ക് കൂടെ എടുത്തുകൊണ്ട് വരാൻ.
+**Target English:** Message Naveen to bring that book along when he comes.
+15. **Audio:** രാഹുലിനോട് പറയുക, എനിക്ക് ഇന്ന് സുഖമില്ല, അതുകൊണ്ട് ഞാൻ ഓഫീസിൽ വരില്ല എന്ന്.
+**Target English:** Tell Rahul that I am not feeling well today, so I will not come to the office.
+
+### How to process these in Audacity
+
+1. Hit record and read all 15 sentences one after the other, leaving a 2-second pause between each.
+2. Once done, highlight each sentence individually and export them as `cmd_002.wav`, `cmd_003.wav`, etc., so they are cleanly separated.
+3. Don't worry about background noise too much; having a little bit of natural room noise actually helps the model generalize better to real-world conditions.
+
+Would you like me to map out the Python code we will use in Colab to load these audio files and the `metadata.csv` once you have them uploaded to your Drive?

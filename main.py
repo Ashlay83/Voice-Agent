@@ -72,7 +72,7 @@ def record_audio():
 
 def translate_audio():
     print("⏳ Translating via Faster-Whisper...")
-    model = WhisperModel("medium", device="cuda", compute_type="int8_float16")
+    model = WhisperModel("faster-whisper-malayalam", device="cuda", compute_type="int8_float16")
     segments, _ = model.transcribe(
         AUDIO_FILENAME,
         task="translate",

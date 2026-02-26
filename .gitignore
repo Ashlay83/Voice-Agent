@@ -13,3 +13,4 @@ git_helps
 # System files
 .DS_Store
 .rasa/
+faster-whisper-malayalam/

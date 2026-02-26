@@ -89,7 +89,7 @@ def translate_audio():
     
     # device="cuda" uses your GPU
     # compute_type="int8_float16" compresses it to fit in your 4GB VRAM
-    model = WhisperModel("medium", device="cuda", compute_type="int8_float16")
+    model = WhisperModel("faster-whisper-malayalam", device="cuda", compute_type="int8_float16")
     
     print("🧠 Translating Malayalam to English...")
     

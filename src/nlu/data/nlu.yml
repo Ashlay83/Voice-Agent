@@ -13,7 +13,14 @@ nlu:
     - message [mom](contact) saying [hello](message_body)
     - Send a [WhatsApp](platform) [hi] (message_body)message to [Deepak](contact)
     - Send a [hi](message_body) message to [Deepak](contact) on WhatsApp
-
+    - Send a WhatsApp message to [Deepak](contact) that [I am stuck in the toilet and will be a little late](message_body)
+    - Send a message to [Deepak](contact) that [I am stuck in traffic and will be a little late](message_body)
+    - Ask [Naveen](contact) if [that project report is completed yet](message_body)
+    - Message [Rahul](contact) on WhatsApp asking if [we can postpone tomorrow's meeting](message_body)
+    - Tell [Anjali](contact) that [I will call back after reaching home](message_body)
+    - Send a WhatsApp message to [Naveen](contact) to [send me that file as soon as possible](message_body)
+    - Message [Deepak](contact) that [all of today's plans are canceled](message_body)
+    
 - intent: inform_platform
   examples: |
     - [whatsapp](platform)
