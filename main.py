@@ -4,10 +4,11 @@ from faster_whisper import WhisperModel
 from pynput import keyboard
 import time
 import requests
-import pyautogui
+from src.automation.whatsapp import automate_whatsapp
+
 
 # --- CONFIGURATION ---
-RASA_SERVER_URL = "http://localhost:5005/model/parse"
+RASA_SERVER_URL = "http://localhost:5005/webhooks/rest/webhook"
 AUDIO_FILENAME = "user_input.wav"
 TOGGLE_KEY = keyboard.Key.shift_r  # Right Shift for Push-to-Talk
 
@@ -84,98 +85,64 @@ def translate_audio():
     return full_text
 
 
-# ==========================================
-# 2. THE HANDS (PyAutoGUI Automation)
-# ==========================================
-def wait_and_click(image_path, timeout=20, click=True):
-    print(f"👀 Scanning for {image_path}...")
-    start_time = time.time()
-    
-    while time.time() - start_time < timeout:
-        try:
-            location = pyautogui.locateCenterOnScreen(image_path, confidence=0.8)
-            if location:
-                print(f"🎯 Found {image_path}!")
-                if click:
-                    pyautogui.moveTo(location.x, location.y, duration=0.3)
-                    pyautogui.click()
-                return True
-        except pyautogui.ImageNotFoundException:
-            pass
-        time.sleep(0.5)
-        
-    print(f"❌ TIMEOUT: Could not find {image_path}.")
-    return False
-
-def automate_whatsapp(contact, message):
-    print("\n🚀 STARTING VISUAL AUTOMATION...")
-    
-    # 1. Click Browser Icon on Taskbar
-    if not wait_and_click("assets/browser_icon.png"): return
-    time.sleep(1) 
-    
-    # 2. Open New Tab (Using Hotkey is much more reliable than an image)
-    print("⌨️ Pressing Ctrl+T for New Tab...")
-    pyautogui.hotkey('ctrl', 't')
-    time.sleep(1)
-    
-    # 3. Click the WhatsApp Bookmark
-    if not wait_and_click("assets/whatsapp_bookmark.png"): return
-    
-    # 4. Wait for WhatsApp to load, click Search Bar
-    # 4. Wait for WhatsApp to load, click Search Bar
-    print("⏳ Waiting for WhatsApp Web to load...")
-    if not wait_and_click("assets/search_bar.png", timeout=30): return
-    
-    # Type contact and hit enter
-    pyautogui.write(contact, interval=0.1)
-    time.sleep(1.5) # Wait for search to populate
-    pyautogui.press("enter")
-    
-    # 5. Type the message (WhatsApp auto-focuses the cursor here!)
-    print("⌨️ Typing the message...")
-    time.sleep(1) # Give the chat window 1 second to fully slide open
-    pyautogui.write(message, interval=0.05)
-    
-    # 6. Press Enter to Send (No need for the send button image!)
-    time.sleep(0.5)
-    pyautogui.press("enter")
-    
-    print("✅ MESSAGE SENT SUCCESSFULLY!")
-
-
-# ==========================================
-# 3. THE BRAIN (Rasa Processing & Logic)
-# ==========================================
 def process_command(text_input):
     if not text_input: return
     
-    print(f"\n🌐 Sending to Rasa: '{text_input}'")
+    print(f"\n🗣️ You: '{text_input}'")
+    
+    # Notice the payload is different now! We are identifying the user so Rasa remembers them.
+    payload = {
+        "sender": "local_user", 
+        "message": text_input
+    }
+    
     try:
-        response = requests.post(RASA_SERVER_URL, json={"text": text_input})
+        response = requests.post(RASA_SERVER_URL, json=payload)
         response.raise_for_status()
-        nlu_data = response.json()
+        bot_responses = response.json()
     except requests.exceptions.ConnectionError:
         print("❌ ERROR: Rasa server is not running!")
         return
 
-    intent = nlu_data['intent']['name']
-    entities = {e['entity']: e['value'] for e in nlu_data['entities']}
     
-    if intent == "send_message":
-        platform = entities.get("platform", "").lower()
-        contact = entities.get("contact")
-        message_body = entities.get("message_body")
-        
-        print(f"🧠 Rasa Parsed -> Platform: {platform} | Contact: {contact} | Message: {message_body}")
-        
-        if platform == "whatsapp" and contact and message_body:
-            automate_whatsapp(contact, message_body)
-        else:
-            print("⚠️ Missing data! Rasa didn't catch platform, contact, or message.")
-    else:
-        print(f"🤷 Unhandled Intent: {intent}")
+    
+    # Helper API call to erase a specific slot from Rasa's memory
+    def clear_rasa_slot(slot_name):
+        url = "http://localhost:5005/conversations/local_user/tracker/events"
+        requests.post(url, json={"event": "slot", "name": slot_name, "value": None})
+        print(f"🧠 Memory Erased: The '{slot_name}' slot has been cleared.")
 
+    # Loop through whatever Rasa decides to say back
+    for bot_reply in bot_responses:
+        bot_text = bot_reply.get("text")
+        print(f"🤖 Agent: {bot_text}")
+        
+        # 1. SUCCESS: Trigger PyAutoGUI
+        if "On it! Sending" in bot_text:
+            print("⚙️ Triggering PyAutoGUI Automation...")
+            parts = bot_text.split(" message to ")
+            if len(parts) > 1:
+                contact_and_msg = parts[1].split(" saying '")
+                contact = contact_and_msg[0]
+                message = contact_and_msg[1].replace("'.", "")
+                
+                automate_whatsapp(contact, message)
+                
+            # Wipe all memory after a successful send
+            requests.post(RASA_SERVER_URL, json={"sender": "local_user", "message": "/restart"})
+
+        # 2. MODIFY CONTACT: Clear just the contact slot
+        elif "Who should I send it to instead?" in bot_text:
+            clear_rasa_slot("contact")
+
+        # 3. MODIFY MESSAGE: Clear just the message slot
+        elif "What should the new message say?" in bot_text:
+            clear_rasa_slot("message_body")
+
+        # 4. CANCEL EVERYTHING: Wipe all memory
+        elif "Message canceled. Let's start over" in bot_text:
+            requests.post(RASA_SERVER_URL, json={"sender": "local_user", "message": "/restart"})
+            print("🧠 Full memory cleared. Ready for a new command.")
 # ==========================================
 # MAIN EXECUTION LOOP
 # ==========================================

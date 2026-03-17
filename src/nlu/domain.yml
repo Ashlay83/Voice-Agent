@@ -4,6 +4,13 @@ intents:
   - send_message
   - inform_platform
   - inform_contact
+  - inform_message
+  - affirm
+  - deny
+  - modify_contact 
+  - modify_message 
+  - modify_all   
+  - request_confirmation  
 
 entities:
   - platform
@@ -26,17 +33,53 @@ slots:
   message_body:
     type: text
     mappings:
+    # 1. If the bot is currently running the form and asks for the message, 
+    # it will grab your ENTIRE raw sentence unconditionally.
+    - type: from_text
+      conditions:
+      - active_loop: message_form
+        requested_slot: message_body
+        
+    # 2. If you are modifying the message later, it will also grab the whole sentence.
+    - type: from_text
+      intent: inform_message
+      
+    # 3. If you say the whole command in one breath at the start, it will extract it normally.
     - type: from_entity
       entity: message_body
+
+
+forms:
+  message_form:
+    required_slots:
+      - platform
+      - contact
+      - message_body
+
+# ... (keep your responses below this exactly the same) ...
 
 responses:
   utter_ask_platform:
   - text: "I can send that, but I need to know which app to use (WhatsApp, Telegram, etc.)?"
 
-  
+  utter_ask_message_body: # <--- ADD THIS
+  - text: "What would you like the message to say?"
+
   utter_ask_contact:
   - text: "Ok sure, may i please know whom to send it to"
 
+  utter_confirm_details: # <--- NEW: The Safety Prompt
+  - text: "Just to confirm, you want to send a {platform} message to {contact} saying '{message_body}'. Is that correct?"
+
+  utter_acknowledge_change_contact: # <--- NEW
+  - text: "Got it. Who should I send it to instead?"
+
+  utter_acknowledge_change_message: # <--- NEW
+  - text: "Alright. What should the new message say?"
+
+  utter_canceled: 
+  - text: "Message canceled. Let's start over."
+  
   utter_message_sent:
   - text: "On it! Sending a {platform} message to {contact} saying '{message_body}'."
 

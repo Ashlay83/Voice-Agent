@@ -3,6 +3,12 @@ version: "3.1"
 nlu:
 - intent: send_message
   examples: |
+    - Send an [email](platform).
+    - I want to send an [email](platform).
+    - Can you send an [email](platform)?
+    - Write an [email](platform).
+    - send an [email](platform)
+    - Send a message.
     - i want to send an [whatsapp](platform) message to [alice](contact) that [i will be not able to come today](message_body)
     - send a [telegram](platform) msg to [john](contact) saying [meeting is cancelled](message_body)
     - text [sarah](contact) on [signal](platform) that [i am running late](message_body)
@@ -11,16 +17,16 @@ nlu:
     - can you send a [email](platform) to [hr](contact) saying [i am sick today](message_body)
     - send a text to [alice](contact)
     - message [mom](contact) saying [hello](message_body)
-    - Send a [WhatsApp](platform) [hi] (message_body)message to [Deepak](contact)
-    - Send a [hi](message_body) message to [Deepak](contact) on WhatsApp
-    - Send a WhatsApp message to [Deepak](contact) that [I am stuck in the toilet and will be a little late](message_body)
-    - Send a message to [Deepak](contact) that [I am stuck in traffic and will be a little late](message_body)
+    - Send a [WhatsApp](platform) [hi](message_body) message to [Deepak](contact)
+    - Send a [hi](message_body) message to [Deepak](contact) on [WhatsApp](platform)
+    - Send a [WhatsApp](platform) message to [Deepak](contact) that [I am stuck in the toilet and will be a little late](message_body)
+    - Send a [WhatsApp](platform) message to [Deepak](contact) that [I am stuck in traffic and will be a little late](message_body)
     - Ask [Naveen](contact) if [that project report is completed yet](message_body)
-    - Message [Rahul](contact) on WhatsApp asking if [we can postpone tomorrow's meeting](message_body)
+    - Message [Rahul](contact) on [WhatsApp](platform) asking if [we can postpone tomorrow's meeting](message_body)
     - Tell [Anjali](contact) that [I will call back after reaching home](message_body)
-    - Send a WhatsApp message to [Naveen](contact) to [send me that file as soon as possible](message_body)
+    - Send a [WhatsApp](platform) message to [Naveen](contact) to [send me that file as soon as possible](message_body)
     - Message [Deepak](contact) that [all of today's plans are canceled](message_body)
-    
+
 - intent: inform_platform
   examples: |
     - [whatsapp](platform)
@@ -29,12 +35,62 @@ nlu:
     - on [discord](platform)
     - [email](platform)
 
+- intent: inform_message
+  examples: |
+    - [I am running late](message_body)
+    - [tell him I will be there in 5 minutes](message_body)
+    - [the project is due tomorrow](message_body)
+    - [hello how are you doing](message_body)
+    - [cancel all of my meetings today](message_body)
+
 - intent: inform_contact
   examples: |
     - [Alice](contact)
     - to [bob](contact)
     - [john](contact) please
     - message [alice](contact)
+
+- intent: affirm
+  examples: |
+    - yes
+    - yeah
+    - yup
+    - exactly
+    - sure
+    - do it
+    - send it
+
+- intent: deny
+  examples: |
+    - no
+    - nope
+    - cancel
+    - stop
+    - wait no
+    - don't send it
+    - wrong
+
+- intent: modify_contact
+  examples: |
+    - change the contact
+    - wrong person
+    - edit the contact
+    - different person
+    - change who I am sending it to
+
+- intent: modify_message
+  examples: |
+    - change the message
+    - edit the message
+    - wrong message
+    - modify the text
+
+- intent: modify_all
+  examples: |
+    - start over
+    - change everything
+    - wrong app and person
+    - cancel and restart
 
 - synonym: whatsapp
   examples: |
