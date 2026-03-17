@@ -55,7 +55,7 @@ def wait_for_wake_word():
     
     # Wrap the microphone initialization in our silencer
     with silence_c_warnings(), sr.Microphone() as source:
-        print("\n💤 Red is sleeping. Say 'Hey Red' to wake up...")
+        print("\n💤 blue is sleeping. Say 'Hey blue' to wake up...")
         recognizer.adjust_for_ambient_noise(source, duration=1)
         
         while True:
@@ -63,8 +63,8 @@ def wait_for_wake_word():
                 audio = recognizer.listen(source, timeout=1, phrase_time_limit=3)
                 text = recognizer.recognize_google(audio).lower()
                 
-                if "red" in text or "red" in text:
-                    print("\n✨ [AWAKE] jack heard you!")
+                if "blue" in text or "blu" in text:
+                    print("\n✨ [AWAKE] blue heard you!")
                     return True 
                     
             except sr.WaitTimeoutError:
@@ -192,7 +192,7 @@ def process_command(text_input):
                 platform_part = parts[0].lower() 
                 
                 contact_and_msg = parts[1].split(" saying '")
-                contact_name = contact_and_msg[0].lower().strip() # Force lowercase for dictionary lookup
+                contact_name = contact_and_msg[0].lower().strip(" .,!?") # Strips spaces AND Whisper's punctuation!
                 message = contact_and_msg[1].replace("'.", "")
                 
                 # Route to the correct skill!
